@@ -15,4 +15,4 @@ _get_project_dir() {
 CURRENT_DIR=$(pwd)
 PROJECT_DIR=$(_get_project_dir)
 
-go run app.go "$@"
+go run app.go "${CURRENT_DIR}" "${PROJECT_DIR}" "$@"
