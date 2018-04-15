@@ -15,4 +15,11 @@ _get_project_dir() {
 CURRENT_DIR=$(pwd)
 PROJECT_DIR=$(_get_project_dir)
 
-go run app.go "${CURRENT_DIR}" "${PROJECT_DIR}" "$@"
+if [ "$1" = "build" ]; then
+  go build
+else
+  go build
+  if [ $? -eq 0 ]; then
+    "${PROJECT_DIR}/go-cli-template" "${CURRENT_DIR}" "${PROJECT_DIR}" "$@"
+  fi
+fi
