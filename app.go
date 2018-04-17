@@ -59,6 +59,8 @@ func mainSubcmd(args []string) {
 		model.Cmd1()
 	} else if subcmd == "cmd2" {
 		model.Cmd2()
+	} else if subcmd == "cat" {
+		model.Cat(mainArgs)
 	} else {
 		fmt.Println("Command not supported")
 		os.Exit(1)
