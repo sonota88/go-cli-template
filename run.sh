@@ -20,6 +20,6 @@ if [ "$1" = "build" ]; then
 else
   go build
   if [ $? -eq 0 ]; then
-    "${PROJECT_DIR}/go-cli-template" "${CURRENT_DIR}" "${PROJECT_DIR}" "$@"
+    "${PROJECT_DIR}/go-cli-template" simple "${CURRENT_DIR}" "${PROJECT_DIR}" "$@"
   fi
 fi
