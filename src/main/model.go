@@ -108,4 +108,5 @@ func Cata(args []string) {
 	if len(linebuf) > 0 {
 		printLine(string(linebuf))
 	}
+	fmt.Println("[EOF]")
 }
