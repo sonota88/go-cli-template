@@ -91,14 +91,10 @@ func Cata(args []string) {
 			for {
 				lfpos := findLfPos(buf)
 				if lfpos == -1 {
-					for i := 0; i < n; i++ {
-						linebuf = append(linebuf, buf[i])
-					}
+					linebuf = append(linebuf, buf[:n]...)
 					break
 				}
-				for i := 0; i <= lfpos; i++ {
-					linebuf = append(linebuf, buf[i])
-				}
+				linebuf = append(linebuf, buf[:(lfpos + 1)]...)
 				printLine(string(linebuf))
 				linebuf = []byte{}
 				buf = buf[(lfpos + 1):]
