@@ -71,6 +71,46 @@ func printLine(line string) {
 	}
 }
 
+func readLine(file *os.File, buf *[]byte, bufSize int) ([]byte, bool) {
+	var line []byte
+	lfpos := findLfPos(*buf)
+
+	if lfpos >= 0 {
+		splitPos := lfpos + 1
+		line = append(line, (*buf)[:splitPos]...)
+		*buf = (*buf)[splitPos:]
+		return line, false
+	} else {
+		line = append(line, (*buf)...)
+	}
+
+	for {
+		readbuf := make([]byte, bufSize)
+		n, err := file.Read(readbuf)
+		*buf = readbuf[:n]
+		if n == 0 {
+			if len(line) > 0 {
+				return line, false
+			} else {
+				return line, true
+			}
+		}
+		if err != nil {
+			panic(err)
+		}
+
+		lfpos := findLfPos(*buf)
+		if lfpos >= 0 {
+			splitPos := lfpos + 1
+			line = append(line, (*buf)[:splitPos]...)
+			*buf = (*buf)[splitPos:]
+			return line, false
+		} else {
+			line = append(line, (*buf)[:n]...)
+		}
+	}
+}
+
 func Cata(args []string) {
 	file, err := os.Open(args[0])
 	if err != nil {
@@ -78,31 +118,13 @@ func Cata(args []string) {
 	}
 	defer file.Close()
 
-	var linebuf []byte
-	buf := make([]byte, 1024)
+	var buf []byte
 	for {
-		n, err := file.Read(buf)
-		if n == 0 {
+		line, isEof := readLine(file, &buf, 1024)
+		if isEof {
 			break
-		} else {
-			if err != nil {
-				panic(err)
-			}
-			for {
-				lfpos := findLfPos(buf)
-				if lfpos == -1 {
-					linebuf = append(linebuf, buf[:n]...)
-					break
-				}
-				linebuf = append(linebuf, buf[:(lfpos + 1)]...)
-				printLine(string(linebuf))
-				linebuf = []byte{}
-				buf = buf[(lfpos + 1):]
-			}
 		}
-	}
-	if len(linebuf) > 0 {
-		printLine(string(linebuf))
+		printLine(string(line))
 	}
 	fmt.Println("[EOF]")
 }
