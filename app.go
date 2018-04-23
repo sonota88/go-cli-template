@@ -2,7 +2,7 @@ package main
 
 import (
 	"./src/main"
-	// "./src/main/maparse"
+	"./src/main/maparse"
 	"fmt"
 	"os"
 	"strconv"
@@ -60,9 +60,11 @@ func mainSubcmd(args []string) {
 	} else if subcmd == "cmd2" {
 		model.Cmd2()
 	} else if subcmd == "cat" {
-		model.Cat(mainArgs)
-	} else if subcmd == "cat_a" {
-		model.Cata(mainArgs)
+		opts, err := maparse.ParseArgs(mainArgs, []string{})
+		if err != nil {
+			panic(err)
+		}
+		model.Cat(opts)
 	} else {
 		fmt.Println("Command not supported")
 		os.Exit(1)

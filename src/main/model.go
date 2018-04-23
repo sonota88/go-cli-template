@@ -22,11 +22,20 @@ func Cmd2() {
 	fmt.Println("cmd2")
 }
 
-func Cat(args []string) {
+func Cat(opts map[string]string) {
+	path := opts["in"]
+	_, isInspect := opts["-A"]
+	if isInspect {
+		cat_a(path)
+	} else {
+		cat(path)
+	}
+}
+
+func cat(path string) {
 	var fp *os.File
 	var err error
 
-	path := args[0]
 	fmt.Println(path)
 
 	fp, err = os.Open(path)
@@ -111,8 +120,8 @@ func readLine(file *os.File, buf *[]byte, bufSize int) ([]byte, bool) {
 	}
 }
 
-func Cata(args []string) {
-	file, err := os.Open(args[0])
+func cat_a(path string) {
+	file, err := os.Open(path)
 	if err != nil {
 		panic(err)
 	}
