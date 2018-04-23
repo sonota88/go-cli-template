@@ -2,8 +2,8 @@ package model
 
 import "fmt"
 
-func Add(a int, b int) {
-	fmt.Println(a + b)
+func Add(a int, b int) int {
+	return a + b
 }
 
 // --------------------------------

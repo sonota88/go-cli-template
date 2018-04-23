@@ -35,7 +35,8 @@ func mainSimple(args []string) {
 
 	a, _ := strconv.Atoi(mainArgs[0])
 	b, _ := strconv.Atoi(mainArgs[1])
-	model.Add(a, b)
+	result := model.Add(a, b)
+	fmt.Println(result)
 }
 
 func mainSubcmd(args []string) {

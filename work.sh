@@ -5,9 +5,19 @@ _fmt(){
   gofmt -w src/main/model.go
 }
 
+_test(){
+  (
+    cd test/main
+    go test
+  )
+}
+
 case "$1" in
   fmt)
     _fmt
+    ;;
+  "test")
+    _test
     ;;
   *)
     ;;
