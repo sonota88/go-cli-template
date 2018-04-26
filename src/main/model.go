@@ -134,13 +134,13 @@ func cat_a(path string) {
 		r = bufio.NewReader(file)
 	}
 
-		for {
-			line, err := r.ReadString('\n')
-			printLine(line)
-			if err == io.EOF {
-				break
-			}
+	for {
+		line, err := r.ReadString('\n')
+		printLine(line)
+		if err == io.EOF {
+			break
 		}
+	}
 
 	fmt.Println("[EOF]")
 }
