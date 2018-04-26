@@ -132,20 +132,20 @@ func cat_a(path string) {
 			printLine(string(line))
 		}
 	} else {
-	file, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-
-	var buf []byte
-	for {
-		line, isEof := readLine(file, &buf, 1024)
-		if isEof {
-			break
+		file, err := os.Open(path)
+		if err != nil {
+			panic(err)
 		}
-		printLine(string(line))
-	}
+		defer file.Close()
+
+		var buf []byte
+		for {
+			line, isEof := readLine(file, &buf, 1024)
+			if isEof {
+				break
+			}
+			printLine(string(line))
+		}
 	}
 	fmt.Println("[EOF]")
 }
