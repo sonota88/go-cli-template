@@ -121,6 +121,17 @@ func readLine(file *os.File, buf *[]byte, bufSize int) ([]byte, bool) {
 }
 
 func cat_a(path string) {
+	if path == "" {
+		file := os.Stdin
+		var buf []byte
+		for {
+			line, isEof := readLine(file, &buf, 1024)
+			if isEof {
+				break
+			}
+			printLine(string(line))
+		}
+	} else {
 	file, err := os.Open(path)
 	if err != nil {
 		panic(err)
@@ -134,6 +145,7 @@ func cat_a(path string) {
 			break
 		}
 		printLine(string(line))
+	}
 	}
 	fmt.Println("[EOF]")
 }
