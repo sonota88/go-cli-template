@@ -122,14 +122,13 @@ func readLine(file *os.File, buf *[]byte, bufSize int) ([]byte, bool) {
 
 func cat_a(path string) {
 	if path == "" {
-		file := os.Stdin
-		var buf []byte
+		r := bufio.NewReader(os.Stdin)
 		for {
-			line, isEof := readLine(file, &buf, 1024)
-			if isEof {
+			line, err := r.ReadString('\n')
+			printLine(string(line))
+			if err == io.EOF {
 				break
 			}
-			printLine(string(line))
 		}
 	} else {
 		file, err := os.Open(path)
@@ -137,14 +136,14 @@ func cat_a(path string) {
 			panic(err)
 		}
 		defer file.Close()
+		r := bufio.NewReader(file)
 
-		var buf []byte
 		for {
-			line, isEof := readLine(file, &buf, 1024)
-			if isEof {
+			line, err := r.ReadString('\n')
+			printLine(line)
+			if err == io.EOF {
 				break
 			}
-			printLine(string(line))
 		}
 	}
 	fmt.Println("[EOF]")
